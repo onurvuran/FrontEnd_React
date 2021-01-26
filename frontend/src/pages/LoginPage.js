@@ -3,12 +3,17 @@ import Input from '../components/Input';
 import { withTranslation } from 'react-i18next';
 import { login } from '../api/apiCalls';
 
+import ButtonWithProgress from '../components/ButtonWithProgress';
+import { withApiProgress } from '../shared/ApiProgress';
+
 class LoginPage extends Component {
     state ={
         username : null,
         password: null,
-        error:null
+        error:null,
+        pendingApiCall:false
     }
+ 
     onChange = evet =>{
         const {name,value} = evet.target;
         this.setState({
@@ -23,11 +28,13 @@ class LoginPage extends Component {
             username,
             password
         }
+        const {push} = this.props.history;
         this.setState({
             error:null
         })
         try{
              await login(creds)
+            push('/');
         }catch (apiError){
             this.setState({
                 error:apiError.response.data.message
@@ -39,7 +46,7 @@ class LoginPage extends Component {
       
     }
     render() {
-        const {t}= this.props;
+        const {t,pendingApiCall}= this.props;
         const {username,password,error} = this.state;
         const buttonEnabled=username && password
         return (
@@ -52,14 +59,17 @@ class LoginPage extends Component {
                      {error}
                   </div>}
                 <div className="text-center">
-                <button className="btn btn-primary" 
-                disabled={!buttonEnabled}
-                onClick={this.onClickLogin}>{t('Login')}  </button>
+                <ButtonWithProgress 
+                onClick={this.onClickLogin}
+                disabled={!buttonEnabled || pendingApiCall}
+                    pendingApiCall ={pendingApiCall}
+                text={t('Login')} 
+                   />
                 </div>
                 </form>
             </div>
         );
     }
 }
-
-export default withTranslation()(LoginPage);
+const LoginPageWithTranslation = withTranslation()(LoginPage);
+export default withApiProgress(LoginPageWithTranslation,'/api/1.0/auth');

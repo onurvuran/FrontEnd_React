@@ -2,6 +2,8 @@ import React from 'react';
 import { singup } from '../api/apiCalls';
 import Input from '../components/Input';
 import { withTranslation } from 'react-i18next';
+import  ButtonWithProgress from '../components/ButtonWithProgress';
+import { withApiProgress } from '../shared/ApiProgress';
 
 
 
@@ -12,7 +14,6 @@ class UserSinupPage extends React.Component{
         displayName:null,
         password:null,
         passwordRepeat:null,
-        pendingApiCall:false,
         errors:{}
     };
 
@@ -50,7 +51,7 @@ class UserSinupPage extends React.Component{
             password
         };
 
-        this.setState({pendingApiCall:true });
+       
         try{
             const response = await singup(body);
         }catch (error){
@@ -60,7 +61,7 @@ class UserSinupPage extends React.Component{
            
         }
 
-        this.setState({pendingApiCall:false });
+      
 
         
 
@@ -78,9 +79,9 @@ class UserSinupPage extends React.Component{
    
    
     render(){
-        const {pendingApiCall, errors} = this.state;
+        const { errors} = this.state;
         const { displayName,username,password,passwordRepeat}= errors;
-        const { t }= this.props;
+        const { pendingApiCall,t }= this.props;
 
         return(
             <div className="container ">
@@ -92,10 +93,12 @@ class UserSinupPage extends React.Component{
                 <Input name="password" label={t('Password')} error={password} onChange={this.onChange}  type="password"/>
                 <Input name="passwordRepeat" label={t('Password Repeat')} error={passwordRepeat} onChange={this.onChange}  type="password"/>
                 <div className="text-center">
-                <button className="btn btn-primary"  
+                <ButtonWithProgress  
                 onClick={this.onClickSignup}
-                disabled={this.state.pendingApiCall || passwordRepeat !== undefined} >
-                     { pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}{t('SING UP')}</button>
+                disabled={this.state.pendingApiCall || passwordRepeat !== undefined}
+                pendingApiCall={pendingApiCall}
+                text={t('SING UP')}
+                    />
                 </div>
               
             </form>
@@ -107,5 +110,7 @@ class UserSinupPage extends React.Component{
     }
     
 }
-const UserSingupPageWithTranslation = withTranslation()(UserSinupPage);
-export default UserSingupPageWithTranslation;
+const UserSingupPageWithApiProgress = withApiProgress(UserSinupPage,'/api/1.0/users');
+const UserSingupPageWithTranslation = withTranslation()(UserSingupPageWithApiProgress);
+
+export default  UserSingupPageWithTranslation;

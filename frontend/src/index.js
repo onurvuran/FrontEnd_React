@@ -3,17 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './bootstrap.scss';
 import reportWebVitals from './reportWebVitals';
-//import UserSinupPage from './pages/UserSinupPage';
-//import LoginPage from './pages/LoginPage';
-import App from './App';
 import './i18n';
-//import Languageselector  from './components/Languageselector';
-
-ReactDOM.render(
-<div> 
-  <App/>
-
-</div>,
+import  App  from "./container/App";
+ReactDOM.render(<App/>
+  ,
   document.getElementById('root')
 );
 
