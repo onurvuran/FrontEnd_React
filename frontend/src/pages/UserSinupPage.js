@@ -61,20 +61,6 @@ class UserSinupPage extends React.Component{
            
         }
 
-      
-
-        
-
-       // singup(body)
-        //.then(Response =>{
-          //  this.setState({pendingApiCall:false });
-       // })
-        //.catch(error =>{
-          //  this.setState({pendingApiCall:false});
-        //});
-
-        
-
     };
    
    
@@ -110,7 +96,8 @@ class UserSinupPage extends React.Component{
     }
     
 }
-const UserSingupPageWithApiProgress = withApiProgress(UserSinupPage,'/api/1.0/users');
-const UserSingupPageWithTranslation = withTranslation()(UserSingupPageWithApiProgress);
+ const UserSingupPageWithApiProgress = withApiProgress(UserSinupPage,'/api/1.0/users');
+ const UserSingupPageWithTranslation = withTranslation()(UserSingupPageWithApiProgress);
 
-export default  UserSingupPageWithTranslation;
+ export default  UserSingupPageWithTranslation;
+

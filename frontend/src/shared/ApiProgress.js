@@ -11,7 +11,6 @@ export function withApiProgress(WrappedComponent,apiPath) {
 
 return class  extends Component {
     static displayName = `ApiProgress(${getDisplayName(WrappedComponent)})`;
-    // static displayName = 'ApiProgress('+getDisplayName(WrappedComponent)+')';
     state ={
         pendingApiCall:false
     }

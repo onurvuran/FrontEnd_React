@@ -23,35 +23,38 @@ class LoginPage extends Component {
     }
     onClickLogin = async event =>{
         event.preventDefault();
-        const{username,password} = this.state;
+        const{ username,password } = this.state;
+        const { onLoginSuccess } =this.props;
         const creds={
             username,
             password
-        }
+        };
         const {push} = this.props.history;
+
         this.setState({
             error:null
         })
         try{
-             await login(creds)
+             await login(creds);
             push('/');
+            onLoginSuccess(username);
         }catch (apiError){
             this.setState({
                 error:apiError.response.data.message
-            })
+            });
 
 
         }
         
       
-    }
+    };
     render() {
         const {t,pendingApiCall}= this.props;
         const {username,password,error} = this.state;
         const buttonEnabled=username && password
         return (
             <div className="container">
-                <h1 className="text-center">{t('Login')}</h1>
+                <h1 className="text-center">{t('LOGIN')}</h1>
                 <form>
                 <Input label={t('Username')} name="username" onChange={this.onChange}/>
                 <Input label={t('Password')} name="password" type="password" onChange={this.onChange}/>
@@ -63,7 +66,7 @@ class LoginPage extends Component {
                 onClick={this.onClickLogin}
                 disabled={!buttonEnabled || pendingApiCall}
                     pendingApiCall ={pendingApiCall}
-                text={t('Login')} 
+                text={t('LOGIN')} 
                    />
                 </div>
                 </form>

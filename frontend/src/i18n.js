@@ -11,7 +11,9 @@ i18n.use(initReactI18next).init({
             DisplayName:'DisplayName',
             Password:'Password',
             'Password Repeat':'Password Repeat',
-            Login :'LOGIN'
+            Login :'LOGIN',
+            Logout : 'Logout'
+
         }
     },
     tr:{
@@ -22,7 +24,8 @@ i18n.use(initReactI18next).init({
         DisplayName:'Ekran Adı',
         Password:'Şifre',
         'Password Repeat':'Şifreyi Tekrar yazınız',
-        Login:'GİRİŞ YAP'
+        Login:'GİRİŞ YAP',
+        Logout : 'Çıkış Yap'
        } 
     }
 },

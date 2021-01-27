@@ -2,9 +2,42 @@ import React, { Component } from 'react';
 import logo from '../assets/logo.jpg';
 import { Link } from "react-router-dom";
 import { withTranslation } from 'react-i18next';
+
 export  class Topbar extends Component {
+   
     render() {
-        const {t} = this.props;
+        const {t,isLoggedIn,username,onLogoutSuccess} =this.props;
+
+        let links=(
+            <ul className="navbar-nav ml-auto">
+            <li>
+                <Link className="nav_link" to="/login">
+                {t('Login')}
+                </Link>
+            </li>
+            <li>
+            <Link className="nav_link" to="/singup">
+                {t('Sing Up')}
+                </Link>
+            </li>
+        </ul>
+        );
+        if (isLoggedIn) {
+            links =(
+                <ul className="navbar-nav ml-auto">
+                    <li >
+                        <Link className="nav-link" to={`/user/${username}`}>
+                            {username}
+                            </Link>
+                        
+                    </li>
+                    <li className="nav-link" onClick={onLogoutSuccess} style={{cursor:'pointer'}}>
+                       {t('Logout')}
+                    </li>
+                    </ul>
+            )
+        }
+
         return (
             
             <div className="shadow-sm  bg-light mb-2">
@@ -14,18 +47,7 @@ export  class Topbar extends Component {
                  
                  Think
                  </Link>
-                 <ul className="navbar-nav ml-auto">
-                     <li>
-                         <Link className="nav_link" to="/login">
-                         {t('Login')}
-                         </Link>
-                     </li>
-                     <li>
-                     <Link className="nav_link" to="/singup">
-                         {t('Sing Up')}
-                         </Link>
-                     </li>
-                 </ul>
+                {links}
                  </nav>
                </div>
    
